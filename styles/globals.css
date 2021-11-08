@@ -20,6 +20,10 @@ body {
   box-shadow: none !important;
 }
 
+.form-check-input:checked {
+  background-color: #1D37C2 !important;
+  border-color: #1D37C2 !important;
+}
 a {
   color: inherit;
   text-decoration: none;

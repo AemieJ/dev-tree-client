@@ -3,9 +3,47 @@ import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import frontPagePic from '../public/front-page.png'
 import aboutPic from '../public/about.png'
-import { Container, Col, Row, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Col, Row, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { useState } from 'react'
+import { server } from "../config/server";
+import { toast, ToastContainer } from 'react-nextjs-toast'
 
 export default function Home() {
+  const [email, setEmail] = useState('')
+
+  const verifyEmail = () => {
+    let emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
+  }
+
+  const addEmail = async (e) => {
+    e.preventDefault()
+    let verified = verifyEmail()
+    if (verified) {
+      const res = await fetch(`${server}/api/subscriber`, {
+        method: "post",
+        body: email,
+      });
+      const { data, err } = await res.json()
+      if (err) {
+        toast.notify(err, {
+          duration: 5,
+          type: "error"
+        })
+      } else {
+        toast.notify('You\'ve been successfully subscribed to devtree', {
+          duration: 5,
+          type: "success"
+        })
+      }
+    } else {
+      toast.notify('Email is invalid', {
+        duration: 5,
+        type: "error"
+      })
+    }
+  }
+  
   return (
       <>
       <Head>
@@ -14,6 +52,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <ToastContainer />
       <Row className={styles.main}>
         <Col sm={12} lg={true}><Image src={frontPagePic} /></Col>
         <Col>
@@ -22,10 +61,14 @@ export default function Home() {
           <div className={styles.description}>A developer is
         judged based on <b>Github, Resume and Linkedin</b> and to see them in an easy and readable form, our tool comes into play! 🚀</div>
         <InputGroup className={styles.input_grp}>
-          <FormControl aria-label="With textarea" placeholder="name@example.com" />
+          <FormControl aria-label="With textarea" placeholder="name@example.com" 
+          onChange = {(e) => {setEmail(e.target.value)}}
+          />
           <InputGroup.Text>Enter your Email</InputGroup.Text>
         </InputGroup>
-        <Button variant="primary" className={styles.subscribe_btn}>Subscribe for Newsletter</Button>
+        <Button variant="primary" className={styles.subscribe_btn}
+        onClick= {addEmail}
+        >Subscribe for Newsletter</Button>
         </Col>
       </Row>
 
