@@ -1,0 +1,30 @@
+html,
+body {
+  background-color: #DFEBFC !important;
+  color: #1D37C2 !important;
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+.form-control,
+.btn {
+  transition: none !important
+}
+
+.form-control:focus,
+.btn:focus {
+  color: #1D37C2 !important;
+  outline:0px !important; 
+  box-shadow: none !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}

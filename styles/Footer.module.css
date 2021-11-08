@@ -1,0 +1,28 @@
+.main_footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+    width: 100%;
+    margin-top: auto;
+    height: 100px;
+    border-top: 1px solid #eaeaea;
+    margin-bottom: .5rem;
+    text-align: center;
+  }
+
+  .footer p {
+    margin-bottom: 0 !important;
+  }
+
+  .footer a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    text-decoration: none !important;
+    color: #1D37C2 !important;
+  }
