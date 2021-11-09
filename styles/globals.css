@@ -1,5 +1,6 @@
 html,
 body {
+  scroll-behavior: smooth;
   background-color: #DFEBFC !important;
   color: #1D37C2 !important;
   padding: 0;
@@ -9,7 +10,8 @@ body {
 }
 
 .form-control,
-.btn {
+.btn,
+a {
   transition: none !important
 }
 
@@ -20,10 +22,27 @@ body {
   box-shadow: none !important;
 }
 
-.form-check-input:checked {
+a:focus {
+  outline:0px !important; 
+  box-shadow: none !important;
+}
+
+.pagination {
+  margin-bottom: 2.5rem;
+  justify-content: center;
+}
+
+.page-link:not(:disabled) {
+  color: #1D37C2;
+}
+
+.form-check-input:checked,
+.page-item.active .page-link {
   background-color: #1D37C2 !important;
   border-color: #1D37C2 !important;
+  color: #fff !important;
 }
+
 a {
   color: inherit;
   text-decoration: none;

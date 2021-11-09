@@ -1,0 +1,29 @@
+.title {
+    font-size: 2.25rem;
+    font-weight: 600;
+    margin-top: 2rem;
+}
+
+.main {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.card_img {
+    border-radius: 1.25rem;
+}
+
+.card_subtitle {
+    opacity: 80%;
+    font-size: .85rem;
+}
+
+.card_body {
+    opacity: 60%;
+    font-size: .75rem;
+    padding: 1rem 0;
+}
+
+.btn {
+    background: #1D37C2 !important;
+}
