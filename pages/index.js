@@ -52,7 +52,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <ToastContainer />
       <Row className={styles.main}>
         <Col sm={12} lg={true}><Image src={frontPagePic} /></Col>
         <Col>
@@ -83,6 +82,7 @@ export default function Home() {
         </Col>
       </Row>
 
+      <ToastContainer />
     </>
   )
 }
