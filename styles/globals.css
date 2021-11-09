@@ -15,8 +15,16 @@ a {
   transition: none !important
 }
 
+.btn {
+  background-color: #fff !important;
+  color: #1D37C2 !important;
+  border-color: #1D37C2 !important;
+}
+
 .form-control:focus,
-.btn:focus {
+.btn:focus,
+.btn:active,
+.btn:hover {
   color: #1D37C2 !important;
   outline:0px !important; 
   box-shadow: none !important;
@@ -25,6 +33,12 @@ a {
 a:focus {
   outline:0px !important; 
   box-shadow: none !important;
+}
+
+.dropdown-item:focus,
+.dropdown-item.active, .dropdown-item:active {
+  background-color: #1D37C2 !important;
+  color: #fff !important;
 }
 
 .pagination {
