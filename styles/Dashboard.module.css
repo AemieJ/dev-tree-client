@@ -29,6 +29,13 @@
     padding: 1rem 0;
 }
 
+.error_msg {
+    color: #a10404 !important;
+    text-decoration: underline;
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
 .btn,
 .search_btn, 
 .search {

@@ -20,7 +20,10 @@ export default function Dashboard(results) {
         const res = await fetch(`${server}/api/dashboard/${number - 1}`);
         const { list, err } = await res.json()
         if (err) {
-            // TODO: err toast
+            toast.notify(err, {
+                duration: 5,
+                type: "error"
+            })
         } else {
             const parsed = JSON.parse(list)
             const userList = parsed.users
@@ -38,7 +41,10 @@ export default function Dashboard(results) {
 
         const { data, err } = await res.json()
         if (err) {
-
+            toast.notify(err, {
+                duration: 5,
+                type: "error"
+            })
         } else {
             let parsed = JSON.parse(data)
             setTotalPages(parsed.pages)
@@ -50,7 +56,6 @@ export default function Dashboard(results) {
 
     let items = []
     for (let number = 1; number <= totalPages; ++number) {
-        console.log(totalPages)
         items.push(
             <Pagination.Item key={number} active={number === page}
             onClick={(e) => {
@@ -68,7 +73,6 @@ export default function Dashboard(results) {
         );
     }
 
-
     return (
         <>
             <p className={styles.title}>Developer's Dashboard</p>
@@ -81,7 +85,7 @@ export default function Dashboard(results) {
                 value={search}
                 onChange={e => setSearch(e.target.value)} />
                 <DropdownButton
-                title="Dropdown"
+                title="Filter"
                 id="input-group-dropdown-4"
                 align="end"
                 >
@@ -128,7 +132,10 @@ export default function Dashboard(results) {
 
             <Users users={users} />
 
-            <Pagination>
+            {
+                totalPages === 0 ? <>{<p className={styles.error_msg}>
+                    Sorry, but no user has been found based on your query</p>}</>
+                : <Pagination>
                 <Pagination.First disabled={page === 1}
                 onClick={(e) => {
                     e.preventDefault()
@@ -168,6 +175,7 @@ export default function Dashboard(results) {
                     }
                 }}/>
             </Pagination>
+            }
 
             <ToastContainer />
         </>
