@@ -4,11 +4,15 @@ import { useState, useEffect } from 'react'
 
 const Header = () => {
     const [isLogged, setLogged] = useState(false)
+    const [location, setLocation] = useState('')
 
     useEffect(() => {
         let getItem = localStorage.getItem("isLogged")
         if (getItem === '1') {
             setLogged(true)
+            getItem = localStorage.getItem("email")
+            let token = localStorage.getItem("accessToken")
+            setLocation(`/profile/${getItem}/${token}`)
         } else {
             setLogged(false)
         }
@@ -32,12 +36,13 @@ const Header = () => {
                             <Nav.Link href="/login" className={styles.login_link}>Login</Nav.Link>
                     </Nav>: 
                         <Nav className="ms-auto">
-                        <Nav.Link href="/profile" className={styles.link}>Profile</Nav.Link>
+                        <Nav.Link href={location} className={styles.link}>Profile</Nav.Link>
                         <Nav.Link className={styles.login_link}
                         onClick={() => {
                             localStorage.removeItem("isLogged")
                             localStorage.removeItem("accessToken")
-                            location.href = "/"
+                            localStorage.removeItem("email")
+                            window.location.href = "http://localhost:3000/"
                         }}>Logout</Nav.Link>
                 </Nav>
                     }

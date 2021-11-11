@@ -16,11 +16,13 @@
     "bootstrap": "^5.1.3",
     "framer-motion": "^4",
     "graphql": "^16.0.1",
+    "json": "^11.0.0",
     "next": "12.0.3",
     "react": "17.0.2",
     "react-bootstrap": "^2.0.2",
     "react-dom": "17.0.2",
-    "react-nextjs-toast": "^1.2.5"
+    "react-nextjs-toast": "^1.2.5",
+    "url-exist": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "8.2.0",

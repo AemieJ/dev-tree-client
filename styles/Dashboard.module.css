@@ -48,6 +48,12 @@
     border-color: #a10404 !important;
 }
 
+.btn:active,
+.btn:hover,
+.btn:focus {
+    color: #fff !important;
+}
+
 .search_btn:focus,
 .search_btn:hover,
 .search_btn:active {

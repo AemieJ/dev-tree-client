@@ -30,8 +30,7 @@ export default function Login() {
 
     const loginUser = async (e) => {
         e.preventDefault()
-
-        if (name.length === 0 || password.length === 0) {
+        if (email.length === 0 || password.length === 0) {
             toast.notify('Form is incomplete', {
                 duration: 5,
                 type: "error"
@@ -57,13 +56,14 @@ export default function Login() {
                 } else {
                     let parsed = JSON.parse(data)
                     let accessToken = parsed.msg.accessToken.token
-                    localStorage.setItem("acessToken", accessToken)
+                    localStorage.setItem("accessToken", accessToken)
+                    localStorage.setItem("email", email)
                     localStorage.setItem("isLogged", 1)
                     toast.notify('Successful Login', {
                         duration: 5,
                         type: "success"
                     })
-                    setTimeout(location.href = "/dashboard", 8000)
+                    setTimeout(window.location.href = "/dashboard", 8000)
                 }
             } else {
                 toast.notify('Data filled is invalid', {

@@ -1,0 +1,45 @@
+.input_group_text {
+    background-color: #fff !important;
+    border-radius: 10px 0 0 10px;
+}
+
+.input {
+    background-color: #fff !important;
+    border-radius: 0 10px 10px 0;
+    color: #1d37c2 !important;
+}
+
+.list_input_grp {
+    margin-left: 1.5rem;
+    width: calc(100% - 1.5rem);
+    margin-bottom: 0.5rem !important;
+}
+
+.list_input_grp_txt {
+    border-radius: 10px 0 0 10px;
+    background: #1d37c2;
+    border-color: #1d37c2;
+    color: #fff;
+}
+
+.list_input {
+    border-radius: 0 10px 10px 0;
+}
+
+.btn_grp {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.reset {
+    margin-right: .5rem;
+    background-color: #a10104 !important;
+    border-color: #a10104 !important;
+    color: #fff !important;
+}
+
+.reset:hover,
+.reset:active,
+.reset:focus {
+    color: #fff !important;
+}

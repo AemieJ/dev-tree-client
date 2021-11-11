@@ -9,9 +9,9 @@ export default function Custom404() {
         <div className={styles.main}>
         <Col lg={6}><Image src={notFound} /></Col>
         <Col className={styles.title}><b>404!! You've landed on the wrong page!</b><br/>
-        Don't worry, we send you back to the safe place.</Col>
+        Don't worry, we will send you back to the safe place.</Col>
         <Button className={styles.home_btn}
-        onClick={() => {location.href = '/'}}>Take me Home &nbsp; 🚀</Button>
+        onClick={() => {window.location.href = '/'}}>Take me Home &nbsp; 🚀</Button>
         </div>
         </>
     )
