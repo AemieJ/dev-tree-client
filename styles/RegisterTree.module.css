@@ -69,3 +69,13 @@
     border-color: #1d37c2 !important;
     color: #1d37c2 !important;
 }
+
+@media (max-width: 991px) {
+  .image {
+      display: none;
+  }
+
+  .form {
+      margin-right: 1rem;
+  }
+}

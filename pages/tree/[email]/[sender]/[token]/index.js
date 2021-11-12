@@ -15,6 +15,7 @@ export default function Profile({ err, mail, sender, data, personal, isSenderBoo
     const [personalID, setPersonal] = useState(null)
 
     useEffect(() => {
+        console.log(isSenderBookmarked)
         setEmail(mail)
         if (data !== undefined) {
             setName(data.name)
@@ -176,11 +177,35 @@ export default function Profile({ err, mail, sender, data, personal, isSenderBoo
                         on your profile publicly everytime a user views your profile. However, as the authenticated
                                 owner, you can delete the id or update the list as per your convinience.</p>
                         {
-                            personalID === null ? <><Badge bg="warning" text="dark">
+                            (personalID === null && mail !== sender) ? <><Badge bg="warning" text="dark">
                             No tree view has been created by the user yet
                           </Badge></>
-                                : <><Personal personal={personalID} 
-                                isLoggedUser={mail === sender}/></>
+                                : <> {(mail !== sender) ? <Personal personal={personalID} isLoggedUser={false} /> 
+                            : <>
+                                {
+                                    personalID === null ? <><Button className={styles.create_tree}
+                                        onClick={() => {
+                                            if (data.isFirstTimeLogin) {
+                                                window.location.href = "/registerTreeFT"
+                                            } else {
+                                                window.location.href = "/registerTreeNFT"
+                                            }
+                                        }}>Create Tree View</Button></>
+                                    : <>{
+                                        personalID.youtube.id !== '' ? <Personal personal={personalID} 
+                                        isLoggedUser={true}/>
+                                        : <Button className={styles.create_tree}
+                                        onClick={() => {
+                                            if (data.isFirstTimeLogin) {
+                                                window.location.href = "/registerTreeFT"
+                                            } else {
+                                                window.location.href = "/registerTreeNFT"
+                                            }
+                                        }}>Add Tree View</Button>
+                                    }</>
+                                }
+                            </>
+                            }</>
                         }
                     </div>
                 </Col>
@@ -197,7 +222,7 @@ export const getServerSideProps = async (context) => {
 
     let isSenderBookmarked = false
 
-    let res = await fetch(`${server}/api/fetchProfile`, {
+    let res = await fetch(`${server}/api/fetchUser`, {
         method: "post",
         body: email
     })
@@ -218,31 +243,7 @@ export const getServerSideProps = async (context) => {
 
     let parsed = JSON.parse(data)
 
-    res = await fetch(`${server}/api/fetchPersonal`, {
-        method: "post",
-        body: email
-    })
-
-    let data2 = await res.json()
-    data = data2.data
-    err = data2.err
-
-    if (err) {
-        return {
-            props: {
-                err: null,
-                mail: email,
-                sender: sender,
-                data: parsed,
-                personal: null,
-                isSenderBookmarked,
-                token
-            }
-        }
-    }
-
-    let parsed1 = JSON.parse(data)
-
+    let data2;
     if (token && sender) {
         res = await fetch(`${server}/api/fetchBookmarks`, {
             method: "post",
@@ -289,6 +290,31 @@ export const getServerSideProps = async (context) => {
             isSenderBookmarked = true
         }
     }
+
+    res = await fetch(`${server}/api/fetchPersonal`, {
+        method: "post",
+        body: email
+    })
+
+    data2 = await res.json()
+    data = data2.data
+    err = data2.err
+
+    if (err) {
+        return {
+            props: {
+                err: null,
+                mail: email,
+                sender: sender,
+                data: parsed,
+                personal: null,
+                isSenderBookmarked,
+                token
+            }
+        }
+    }
+
+    let parsed1 = JSON.parse(data)
 
     return {
         props: {

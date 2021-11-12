@@ -82,7 +82,8 @@ export default function Profile({ err, mail, data, personal, token, bookmarks })
                             <p>This is the section that covers the detail of your profile. Within here,
                             your name, email, gender and profile (avatar) is displayed which will be showcased
                             publicly by any user.</p>
-                            <ProfileView user={{name, email, gender, profile}} 
+                            <ProfileView user={{name: data.name, email: data.email, 
+                            gender: data.gender, profile: data.profile }} 
                             isLoggedUser={true} />
                             </div>
                             <div id="tree"><h1>Tree View</h1>
