@@ -29,6 +29,7 @@
 .btn_grp {
     display: flex;
     justify-content: flex-end;
+    margin-bottom: 1rem;
 }
 
 .reset {
@@ -36,6 +37,19 @@
     background-color: #a10104 !important;
     border-color: #a10104 !important;
     color: #fff !important;
+}
+
+.delete {
+    float: right;
+    border: none !important;
+    background: none !important;
+    color: #a10104 !important;
+}
+
+.delete:hover,
+.delete:active,
+.delete:focus {
+    color: #a10104 !important;
 }
 
 .reset:hover,

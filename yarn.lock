@@ -1505,6 +1505,11 @@ caniuse-lite@^1.0.30001202, caniuse-lite@^1.0.30001219, caniuse-lite@^1.0.300012
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001278.tgz#51cafc858df77d966b17f59b5839250b24417fff"
   integrity sha512-mpF9KeH8u5cMoEmIic/cr7PNS+F5LWBk0t2ekGT60lFf0Wq+n9LspAj0g3P+o7DQhD3sUdlMln4YFAWhFYn9jg==
 
+cartoon-avatar@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/cartoon-avatar/-/cartoon-avatar-1.0.2.tgz#4684e7a4d8438f79f6e62cd168b0a38492c009e6"
+  integrity sha1-RoTnpNhDj3n25izRaLCjhJLACeY=
+
 chalk@2.4.2, chalk@^2.0.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.4.2.tgz#cd42541677a54333cf541a49108c1432b44c9424"

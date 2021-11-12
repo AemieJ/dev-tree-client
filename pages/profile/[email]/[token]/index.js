@@ -98,7 +98,17 @@ export default function Profile({ err, mail, data, personal, token, bookmarks })
                                         window.location.href = "/registerTreeNFT"
                                     }
                                 }}>Create Tree View</Button></>
-                                : <Personal personal={personalID} />
+                            : <>{
+                                personalID.youtube.id !== '' ? <Personal personal={personalID} />
+                                : <Button className={styles.create_tree}
+                                onClick={() => {
+                                    if (firstTimeLogin) {
+                                        alert('First time login')
+                                    } else {
+                                        window.location.href = "/registerTreeNFT"
+                                    }
+                                }}>Add Tree View</Button>
+                            }</>
                             }    
                             </div>
                             <div id="bookmarks"><h1>Bookmarks</h1>

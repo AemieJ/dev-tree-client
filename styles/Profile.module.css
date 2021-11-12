@@ -49,6 +49,10 @@
     border-bottom: 1px solid;
 }
 
+.card_subtitle_drop {
+    font-size: 1rem;
+}
+
 .card_body {
     opacity: 60%;
     font-size: .75rem;
@@ -59,6 +63,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    margin-bottom: .5rem;
 }
 
 .create_tree {
@@ -71,3 +76,23 @@
     background-color: #1d37c2 !important;
     color: #fff !important;
 }
+
+.form_control_user,
+.form_control_user:disabled {
+    border: none;
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    color: #1d37c2 !important;
+}
+
+.update_btn,
+.update_btn:hover,
+.update_btn:active,
+.update_btn:focus {
+    margin-bottom: 1rem;
+    background-color: #1d37c2 !important;
+    color: #fff !important;
+    border-color: #1d37c2 !important;
+}
+

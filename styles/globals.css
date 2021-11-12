@@ -10,6 +10,10 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+.toast-container {
+  z-index: 1020;
+}
+
 .form-control,
 .btn,
 a {
@@ -65,4 +69,8 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+button#btn_gender {
+  padding: 0.1rem 1rem !important;
 }

@@ -4,7 +4,8 @@ import youtube from '../public/youtube.svg'
 import { InputGroup, FormControl, Button } from 'react-bootstrap'
 import { useState } from 'react'
 import styles from '../styles/Personal.module.css'
-import urlExist from 'url-exist'
+import { server } from '../config/server.js'
+import { toast, ToastContainer } from 'react-nextjs-toast'
 
 const Personal = ({ personal }) => {
     const [youtubeID, setYtID] = useState(personal.youtube.id)
@@ -26,19 +27,137 @@ const Personal = ({ personal }) => {
 
     const updatePersonal = async() => {
         let length = youtubeList.length
+        let finalList = []
         for (let i = 0; i < length; ++i) {
             let status = await approveID(youtubeList[i])
-            if (!status) {
-                // TODO: add err status
+            if (!status && youtubeList[i] !== "") {
+                toast.notify('URL isn\'t valid', {
+                    duration: 5,
+                    type: "error"
+                })
                 setTimeout(window.location.reload(), 8000)
+            } else {
+                if (youtubeList[i] !== "") finalList.push(youtubeList[i])
             }
         }
 
-        console.log(youtubeList)
+        let obj = {
+            youtubeList: finalList
+        }
+
+        let body = {
+            email: localStorage.getItem("email"),
+            body: obj,
+            accessToken: localStorage.getItem("accessToken")
+        }
+
+        let res = await fetch(`${server}/api/updatePersonalID`, {
+            method: "post",
+            body: JSON.stringify(body),
+        });
+
+        const { data, err } = await res.json()
+        
+        if (err) {
+            toast.notify(err, {
+                duration: 5,
+                type: "error"
+            })
+        } else {
+            let parsed = JSON.parse(data)
+            if (parsed.status === 403) {
+                let token = parsed.accessToken.token
+                localStorage.setItem("accessToken", token)
+                body.accessToken = token
+
+                res = await fetch(`${server}/api/updatePersonalID`, {
+                    method: "post",
+                    body: JSON.stringify(body),
+                });
+
+                let data2 = await res.json()
+                if (data2.err) {
+                    toast.notify(err, {
+                        duration: 5,
+                        type: "error"
+                    })
+                } else {
+                    toast.notify('Personal ID has been updated', {
+                        duration: 5,
+                        type: "success"
+                    })
+                    setTimeout(window.location.reload(), 8000)
+                }
+            } else {
+                toast.notify('Personal ID has been updated', {
+                    duration: 5,
+                    type: "success"
+                })
+                setTimeout(window.location.reload(), 8000)
+            }
+        }
+    }
+
+    const deletePersonalID = async(account) => {
+        let body = {
+            email: localStorage.getItem("email"),
+            acc: account,
+            accessToken: localStorage.getItem("accessToken")
+        }
+
+        let res = await fetch(`${server}/api/deletePersonalID`, {
+            method: "post",
+            body: JSON.stringify(body),
+        });
+
+        const { data, err } = await res.json()
+        if (err) {
+            toast.notify(err, {
+                duration: 5,
+                type: "error"
+            })
+        } else {
+            let parsed = JSON.parse(data)
+            if (parsed.status === 403) {
+                let token = parsed.accessToken.token
+                localStorage.setItem("accessToken", token)
+                body.accessToken = token
+
+                res = await fetch(`${server}/api/deletePersonalID`, {
+                    method: "post",
+                    body: JSON.stringify(body),
+                });
+
+                let data2 = await res.json()
+                if (data2.err) {
+                    toast.notify(err, {
+                        duration: 5,
+                        type: "error"
+                    })
+                } else {
+                    toast.notify('Personal ID has been deleted', {
+                        duration: 5,
+                        type: "success"
+                    })
+                    setTimeout(window.location.reload(), 8000)
+                }
+            } else {
+                toast.notify('Personal ID has been deleted', {
+                    duration: 5,
+                    type: "success"
+                })
+                setTimeout(window.location.reload(), 8000)
+            }
+        }
     }
 
     return (
         <>
+        <Button className={styles.delete}
+        onClick={async(e) => {
+            e.preventDefault()
+            await deletePersonalID("youtube")
+        }}>Delete ID</Button>
         <InputGroup className="mb-3">
             <InputGroup.Text className={styles.input_group_text}>
                 <Image src={youtube} /></InputGroup.Text>
@@ -106,6 +225,7 @@ const Personal = ({ personal }) => {
         }}>Reset</Button>
         <Button onClick={updatePersonal}>Update Youtube List</Button>
         </div>
+        <ToastContainer/>
         </>
     );
 };
