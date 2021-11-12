@@ -243,7 +243,17 @@ export const getServerSideProps = async (context) => {
 
     let parsed = JSON.parse(data)
 
-    let data2;
+    res = await fetch(`${server}/api/fetchPersonal`, {
+        method: "post",
+        body: email
+    })
+
+    let data2 = await res.json()
+    data = data2.data
+    err = data2.err
+
+    let parsed1 = JSON.parse(data)
+
     if (token && sender) {
         res = await fetch(`${server}/api/fetchBookmarks`, {
             method: "post",
@@ -262,7 +272,7 @@ export const getServerSideProps = async (context) => {
                     mail: email,
                     sender: sender,
                     data: parsed,
-                    personal: parsed1.id,
+                    personal: err ? null : parsed1.id,
                     isSenderBookmarked: false,
                     token
                 }
@@ -270,6 +280,8 @@ export const getServerSideProps = async (context) => {
         }
     
         let parsed2 = JSON.parse(data3)
+        console.log(parsed2)
+        console.log(err3)
         if (parsed2.status === 403) {
             let accessToken = parsed2.accessToken.token
             res = await fetch(`${server}/api/fetchBookmarks`, {
@@ -291,15 +303,6 @@ export const getServerSideProps = async (context) => {
         }
     }
 
-    res = await fetch(`${server}/api/fetchPersonal`, {
-        method: "post",
-        body: email
-    })
-
-    data2 = await res.json()
-    data = data2.data
-    err = data2.err
-
     if (err) {
         return {
             props: {
@@ -313,8 +316,6 @@ export const getServerSideProps = async (context) => {
             }
         }
     }
-
-    let parsed1 = JSON.parse(data)
 
     return {
         props: {
