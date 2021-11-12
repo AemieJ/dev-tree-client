@@ -3,6 +3,11 @@
     margin-bottom: 1.5rem;
 }
 
+.card {
+    width: 14rem;
+    border-radius: 1.25rem;
+}
+
 .card_img {
     border-radius: 1.25rem;
 }
@@ -27,4 +32,10 @@
 .btn:hover,
 .btn:focus {
     color: #fff !important;
+}
+
+@media (max-width: 767px) {
+    .card {
+        width: 18rem;
+    }
 }

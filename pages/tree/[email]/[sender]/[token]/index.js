@@ -227,53 +227,6 @@ export const getServerSideProps = async (context) => {
     data = data2.data
     err = data2.err
 
-    let parsed1 = JSON.parse(data)
-
-    res = await fetch(`${server}/api/fetchBookmarks`, {
-        method: "post",
-        body: JSON.stringify({
-            email: sender, accessToken: token
-        })
-    })
-    
-    data2 = await res.json()
-    let data3 = data2.data
-    let err3 = data2.err
-    if (err3) {
-        return {
-            props: {
-                err,
-                mail: "",
-                sender: sender,
-                data: "",
-                personal: null,
-                isSenderBookmarked: false,
-                token
-            }
-        }
-    }
-
-    let parsed2 = JSON.parse(data3)
-    if (parsed2.status === 403) {
-        let accessToken = parsed2.accessToken.token
-        res = await fetch(`${server}/api/fetchBookmarks`, {
-            method: "post",
-            body: JSON.stringify({
-                email: sender, accessToken
-            })
-        })
-
-        data2 = await res.json()
-        data3 = data2.data
-        err3 = data2.err
-    }
-
-    parsed2 = JSON.parse(data3)
-    let bookmarksMail = parsed2.bookmarks
-    if (bookmarksMail.includes(email)) {
-        isSenderBookmarked = true
-    }
-
     if (err) {
         return {
             props: {
@@ -285,6 +238,55 @@ export const getServerSideProps = async (context) => {
                 isSenderBookmarked,
                 token
             }
+        }
+    }
+
+    let parsed1 = JSON.parse(data)
+
+    if (token && sender) {
+        res = await fetch(`${server}/api/fetchBookmarks`, {
+            method: "post",
+            body: JSON.stringify({
+                email: sender, accessToken: token
+            })
+        })
+        
+        data2 = await res.json()
+        let data3 = data2.data
+        let err3 = data2.err
+        if (err3) {
+            return {
+                props: {
+                    err,
+                    mail: email,
+                    sender: sender,
+                    data: parsed,
+                    personal: parsed1.id,
+                    isSenderBookmarked: false,
+                    token
+                }
+            }
+        }
+    
+        let parsed2 = JSON.parse(data3)
+        if (parsed2.status === 403) {
+            let accessToken = parsed2.accessToken.token
+            res = await fetch(`${server}/api/fetchBookmarks`, {
+                method: "post",
+                body: JSON.stringify({
+                    email: sender, accessToken
+                })
+            })
+    
+            data2 = await res.json()
+            data3 = data2.data
+            err3 = data2.err
+        }
+    
+        parsed2 = JSON.parse(data3)
+        let bookmarksMail = parsed2.bookmarks
+        if (bookmarksMail.includes(email)) {
+            isSenderBookmarked = true
         }
     }
 

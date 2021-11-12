@@ -9,7 +9,7 @@ const Bookmarks = ({ users }) => {
                 return (
                     
                         <Col key={user.email}>  
-                        <Card style={{ width: '14rem', borderRadius: '1.5rem' }}>
+                        <Card className={styles.card}>
                         <Card.Img variant="top" src={user.profile} className={styles.card_img} />
                         <Card.Body>
                             <Card.Title>{user.name}</Card.Title>

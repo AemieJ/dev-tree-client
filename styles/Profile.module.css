@@ -108,3 +108,26 @@
     background-color: #1d37c2 !important;
     color: #fff !important;
 }
+
+@media (max-width: 991px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .card {
+        flex-direction: column;
+        width: 18rem;
+        height: auto;
+    }
+
+    .card_img {
+        width: 18rem;
+        height: auto;
+    }
+
+    .info {
+        margin-bottom: 1.4rem;
+    }
+}

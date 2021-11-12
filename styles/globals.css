@@ -74,3 +74,7 @@ a {
 button#btn_gender {
   padding: 0.1rem 1rem !important;
 }
+
+.bg-warning {
+  margin-bottom: 1rem !important;
+}
