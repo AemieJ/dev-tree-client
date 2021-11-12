@@ -8,8 +8,6 @@ import styles from '../styles/Auth.module.css'
 import { useState } from 'react'
 import Link from 'next/link'
 
-// TODO: forgot password flow integration is left
-
 export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -75,6 +73,29 @@ export default function Login() {
 
     }
 
+    const sendMail = async(e) => {
+        e.preventDefault()
+        const res = await fetch(`${server}/api/sendMail`, {
+            method: "post",
+            body: email
+        })
+
+        const { data, err } = await res.json()
+        if (err) {
+            toast.notify(err, {
+                duration: 5,
+                type: 'error'
+            })
+        } else {
+            toast.notify('Email has been sent. Please check it', {
+                duration: 5,
+                type: 'success'
+            })
+        }
+
+        setTimeout(setShowForgot(false), 8000)
+    }
+
     return (
         <>
             <Head>
@@ -127,14 +148,17 @@ export default function Login() {
                         </Button>
                                     <div className={styles.btn_description}><Button
                                         className={styles.forgot_pass_btn}
-                                        onClick={() => { setShowForgot(true) }}
+                                        onClick={(e) => { 
+                                            e.preventDefault()
+                                            setShowForgot(true)
+                                             }}
                                     >Forgot Password?</Button></div>
                                 </div>
                             </> :
                                 <>
                                     <Button variant="primary" type="submit"
                                         className={styles.submit}
-                                        onClick={() => { setShowForgot(false) }}
+                                        onClick={sendMail}
                                     >
                                         Send Mail
                         </Button>
