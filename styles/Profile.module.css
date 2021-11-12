@@ -96,3 +96,15 @@
     border-color: #1d37c2 !important;
 }
 
+.bookmark {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn_bookmark,
+.btn_bookmark:hover,
+.btn_bookmark:active,
+.btn_bookmark:focus {
+    background-color: #1d37c2 !important;
+    color: #fff !important;
+}

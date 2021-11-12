@@ -21,7 +21,7 @@ const Users = ({ users }) => {
                             <Button variant="primary" className={styles.btn}
                             onClick={(e) => {
                                 e.preventDefault()
-                                window.location.href = `/tree/${user.email}/${localStorage.getItem("email")}`
+                                window.location.href = `/tree/${user.email}/${localStorage.getItem("email")}/${localStorage.getItem("accessToken")}`
                             }}>Tree View</Button>
                         </Card.Body>
                     </Card>
