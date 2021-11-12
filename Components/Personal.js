@@ -6,8 +6,9 @@ import { useState } from 'react'
 import styles from '../styles/Personal.module.css'
 import { server } from '../config/server.js'
 import { toast, ToastContainer } from 'react-nextjs-toast'
+import link from '../public/link.svg'
 
-const Personal = ({ personal }) => {
+const Personal = ({ personal, isLoggedUser }) => {
     const [youtubeID, setYtID] = useState(personal.youtube.id)
     const [youtubeList, setYtList] = useState(personal.youtube.list)
     const [first, setFirst] = useState(personal.youtube.list[0] ?? "")
@@ -153,11 +154,11 @@ const Personal = ({ personal }) => {
 
     return (
         <>
-        <Button className={styles.delete}
+        {isLoggedUser ? <Button className={styles.delete}
         onClick={async(e) => {
             e.preventDefault()
             await deletePersonalID("youtube")
-        }}>Delete ID</Button>
+        }}>Delete ID</Button> : <></>}
         <InputGroup className="mb-3">
             <InputGroup.Text className={styles.input_group_text}>
                 <Image src={youtube} /></InputGroup.Text>
@@ -168,12 +169,15 @@ const Personal = ({ personal }) => {
             />
         </InputGroup>
         
-        <InputGroup className={styles.list_input_grp} key="1">
+        {
+            !isLoggedUser && first === "" ? <></> :
+            <InputGroup className={styles.list_input_grp} key="1">
             <InputGroup.Text className={styles.list_input_grp_txt}>
                 {1}</InputGroup.Text>
             <FormControl
                 className={styles.list_input}
                 type="text"
+                disabled={!isLoggedUser}
                 onChange={(e) => {
                     let list = youtubeList
                     list[0] = e.target.value
@@ -183,13 +187,29 @@ const Personal = ({ personal }) => {
                 value={first}
                 placeholder="Enter first channel link"
             />
+            {
+                !isLoggedUser ? <Button
+                className={styles.go_to}
+                onClick={(e) => {
+                    e.preventDefault()
+                    window.open(
+                        first,
+                        '_blank'
+                    )
+                }}
+                ><Image src={link} className={styles.go_to_img}/></Button> : <></>
+            }
         </InputGroup> 
-
-        <InputGroup className={styles.list_input_grp} key="2">
+        }
+        
+        {
+            !isLoggedUser && second === "" ? <></> :
+            <InputGroup className={styles.list_input_grp} key="2">
             <InputGroup.Text className={styles.list_input_grp_txt}>
                 {2}</InputGroup.Text>
             <FormControl
                 className={styles.list_input}
+                disabled={!isLoggedUser}
                 onChange={(e) => {
                     let list = youtubeList
                     list[1] = e.target.value
@@ -199,13 +219,29 @@ const Personal = ({ personal }) => {
                 value={second}
                 placeholder="Enter second channel link"
             />
-        </InputGroup> 
+            {
+                !isLoggedUser ? <Button
+                className={styles.go_to}
+                onClick={(e) => {
+                    e.preventDefault()
+                    window.open(
+                        second,
+                        '_blank'
+                    )
+                }}
+                ><Image src={link} className={styles.go_to_img}/></Button> : <></>
+            }
+        </InputGroup>    
+        }
 
-        <InputGroup className={styles.list_input_grp} key="3">
+        {
+            !isLoggedUser && third === "" ? <></> : 
+            <InputGroup className={styles.list_input_grp} key="3">
             <InputGroup.Text className={styles.list_input_grp_txt}>
                 {3}</InputGroup.Text>
             <FormControl
                 className={styles.list_input}
+                disabled={!isLoggedUser}
                 onChange={(e) => {
                     let list = youtubeList
                     list[2] = e.target.value
@@ -215,16 +251,30 @@ const Personal = ({ personal }) => {
                 value={third}
                 placeholder="Enter third channel link"
             />
-        </InputGroup> 
+            {
+                !isLoggedUser ? <Button
+                className={styles.go_to}
+                onClick={(e) => {
+                    e.preventDefault()
+                    window.open(
+                        third,
+                        '_blank'
+                    )
+                }}
+                ><Image src={link} className={styles.go_to_img}/></Button> : <></>
+            }
+        </InputGroup>
+        } 
 
-        <div className={styles.btn_grp}>
+        {isLoggedUser ? <div className={styles.btn_grp}>
         <Button className={styles.reset}
         onClick={(e) => {
             e.preventDefault()
             window.location.reload()
         }}>Reset</Button>
         <Button onClick={updatePersonal}>Update Youtube List</Button>
-        </div>
+        </div> : <><div style={{marginBottom: "1rem"}}></div></>
+        }
         <ToastContainer/>
         </>
     );

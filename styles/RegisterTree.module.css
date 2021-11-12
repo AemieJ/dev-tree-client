@@ -43,6 +43,7 @@
 
 .input {
   font-size: 0.8rem;
+  border-left-color: #1d37c2 !important;
 }
 
 .title {
@@ -62,3 +63,9 @@
     opacity: 80%;
     margin-bottom: 1rem;
   }
+
+.input_group_text {
+    background-color: #fff !important;
+    border-color: #1d37c2 !important;
+    color: #1d37c2 !important;
+}

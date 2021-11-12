@@ -18,7 +18,12 @@ const Bookmarks = ({ users }) => {
                             The developer's tree view is just one click away. 
                             Click the tree view to see the tree view of {user.name}.
                             </Card.Body>
-                            <Button variant="primary" className={styles.btn}>Tree View</Button>
+                            <Button variant="primary" className={styles.btn}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                window.location.href = `/tree/${user.email}/${localStorage.getItem("email")}`
+                            }}
+                            >Tree View</Button>
                         </Card.Body>
                     </Card>
                         </Col>

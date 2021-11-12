@@ -1,11 +1,10 @@
 import Head from 'next/head'
 import { toast, ToastContainer } from 'react-nextjs-toast'
 import { server } from "../config/server.js";
-import login from '../public/login.svg'
+import register from '../public/register.svg'
 import Image from 'next/image'
 import {
-    Col, Row, Form, Button, Dropdown,
-    DropdownButton, InputGroup, FormControl
+    Col, Row, Form, Button, InputGroup, FormControl
 } from 'react-bootstrap'
 import styles from '../styles/RegisterTree.module.css'
 import { useState, useEffect } from 'react'
@@ -16,9 +15,6 @@ export default function RegisterTreeFT() {
     const [email, setEmail] = useState(null)
     const [id, setID] = useState('youtube')
     const [idName, setIDName] = useState('')
-    const [first, setFirst] = useState('')
-    const [second, setSecond] = useState('')
-    const [third, setThird] = useState('')
 
     useEffect(() => {
         let getItem = localStorage.getItem("accessToken")
@@ -36,72 +32,87 @@ export default function RegisterTreeFT() {
         
     })
 
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+    const approveID = (string) => {
+        let url;
+        try {
+          url = new URL(string);
+        } catch (_) {
+          return false;  
+        }
+      
+        return url.protocol === "http:" || url.protocol === "https:";
     }
 
-    const addPersonalID = async (e) => {
+    const registerPersonalID = async (e) => {
         e.preventDefault()
-        let list = []
-        if (first !== '') list.push(first)
-        if (second !== '') list.push(second)
-        if (third !== '') list.push(third)
+        const status = await approveID(idName)
 
-        let obj = {
-            id: idName, 
-            list: list,
-            account: id
-        }
-
-        let body = {
-            email, 
-            body: obj,
-            accessToken
-        }
-
-        let res = await fetch(`${server}/api/addPersonalID`, {
-            method: "post",
-            body: JSON.stringify(body),
-        });
-
-        const { data, err } = await res.json()
-        if (err) {
-            toast.notify(err, {
+        if (!status) {
+            toast.notify('ID Link isn\'t valid', {
                 duration: 5,
                 type: "error"
             })
+            window.location.reload()
         } else {
-            let parsed = JSON.parse(data)
-            if (parsed.status === 403) {
-                let token = parsed.accessToken.token
-                setAccessToken(token)
-                localStorage.setItem("accessToken", token)
-                body.accessToken = token
+            let obj;
 
-                res = await fetch(`${server}/api/addPersonalID`, {
-                    method: "post",
-                    body: JSON.stringify(body),
-                });
+            if (id === "youtube") {
+                obj = {
+                    youtubeID: idName, 
+                    youtubeList: []
+                }
+            }
 
-                let data2 = await res.json()
-                if (data2.err) {
-                    toast.notify(err, {
-                        duration: 5,
-                        type: "error"
-                    })
+            let body = {
+                email, 
+                body: obj,
+                accessToken
+            }
+
+            let res = await fetch(`${server}/api/registerPersonalID`, {
+                method: "post",
+                body: JSON.stringify(body),
+            });
+            
+            const { data, err} = await res.json()
+            if (err) {
+                toast.notify(err, {
+                    duration: 5,
+                    type: "error"
+                })
+            } else {
+                let parsed = JSON.parse(data)
+                if (parsed.status === 403) {
+                    let token = parsed.accessToken.token
+                    setAccessToken(token)
+                    localStorage.setItem("accessToken", token)
+                    body.accessToken = token
+    
+                    res = await fetch(`${server}/api/registerPersonalID`, {
+                        method: "post",
+                        body: JSON.stringify(body),
+                    });
+    
+                    let data2 = await res.json()
+                    if (data2.err) {
+                        toast.notify(err, {
+                            duration: 5,
+                            type: "error"
+                        })
+                    } else {
+                        toast.notify('Personal ID has been registered', {
+                            duration: 5,
+                            type: "success"
+                        })
+                        setTimeout(window.location.href = `/profile/${email}/${token}`, 8000)
+                    }
                 } else {
-                    toast.notify('Personal ID has been added', {
+                    toast.notify('Personal ID has been registered', {
                         duration: 5,
                         type: "success"
                     })
-                    setTimeout(window.location.href = `/profile/${email}/${token}`, 8000)
+                    setTimeout(window.location.href = `/profile/${email}/${accessToken}`, 8000)
                 }
-            } else {
-                toast.notify('Personal ID has been added', {
-                    duration: 5,
-                    type: "success"
-                })
-                setTimeout(window.location.href = `/profile/${email}/${accessToken}`, 8000)
             }
         }
 
@@ -110,28 +121,18 @@ export default function RegisterTreeFT() {
     return (
         <>
             <Row className={styles.main}>
-                <Col className={styles.image}><Image src={login} className={styles.login_image} /></Col>
                 <Col sm={12} lg={true}>
                     <div>
-                        <div className={styles.title}>Insertion of ID 🚀</div>
-                        <div className={styles.description}>Here, the ID along with the list of channels
-                                can be included. Insert your ID to include in your tree view.</div>
+                        <div className={styles.title}>Registration of ID 🚀</div>
+                        <div className={styles.description}>As a first time login user, you can register the ID 
+                        of each channel here. You'll be then directed to the profile where you can update the list 
+                        for the respective ID. </div>
                     </div>
                     <Form auto="new-password" className={styles.form}>
                         <Form.Group className="mb-3">
                             <Form.Label><b>ID of channel</b></Form.Label>
                             <InputGroup className="mb-3">
-                                <DropdownButton
-                                    title={capitalizeFirstLetter(id)}
-                                    align="end"
-                                >
-                                    <Dropdown.Item href="#"
-                                        className={styles.drop_item}
-                                        active={id === 'youtube'}
-                                        onClick={() => {
-                                            setID('youtube')
-                                        }}>Youtube</Dropdown.Item>
-                                </DropdownButton>
+                                <InputGroup.Text className={styles.input_group_text}>Youtube</InputGroup.Text>
                                 <FormControl
                                     placeholder="Enter User ID Link"
                                     className={styles.input}
@@ -142,54 +143,16 @@ export default function RegisterTreeFT() {
                             </InputGroup>
 
                         </Form.Group>
-
-                        <Form.Group className={`mb-3`}>
-                            <Form.Label><b>List of channels</b></Form.Label>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text
-                                className={styles.list_id_text}>1</InputGroup.Text>
-                                <FormControl
-                                    placeholder="Enter first channel link"
-                                    type="text"
-                                    className={styles.input}
-                                    value={first}
-                                    onChange={(e) => {setFirst(e.target.value)}}
-                                />
-                            </InputGroup>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text
-                                className={styles.list_id_text}>2</InputGroup.Text>
-                                <FormControl
-                                    placeholder="Enter second channel link"
-                                    className={styles.input}
-                                    type="text"
-                                    value={second}
-                                    onChange={(e) => {setSecond(e.target.value)}}
-                                />
-                            </InputGroup>
-                            <InputGroup className="mb-3">
-                                <InputGroup.Text
-                                className={styles.list_id_text}>3</InputGroup.Text>
-                                <FormControl
-                                    placeholder="Enter third channel link"
-                                    className={styles.input}
-                                    type="text"
-                                    value={third}
-                                    onChange={(e) => {setThird(e.target.value)}}
-                                />
-                            </InputGroup>
-                        </Form.Group>
                         <div className={styles.btn_grp}>
                             <Button variant="primary" type="submit"
                                 className={styles.submit}
-                                onClick={addPersonalID}>
-                                Add ID
+                                onClick={registerPersonalID}>
+                                Register ID
                         </Button>
                         </div>
-
-
                     </Form>
                 </Col>
+                <Col className={styles.image}><Image src={register} className={styles.login_image} /></Col>
             </Row>
 
             <ToastContainer />

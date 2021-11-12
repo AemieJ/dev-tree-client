@@ -28,7 +28,6 @@ export default function Profile({ err, mail, data, personal, token, bookmarks })
                         type: "error"
                     })
                 } else {
-                    console.log(personal)
                     setAccessToken(token)
                     localStorage.setItem("accessToken", token)
                     setEmail(mail)
@@ -83,7 +82,8 @@ export default function Profile({ err, mail, data, personal, token, bookmarks })
                             <p>This is the section that covers the detail of your profile. Within here,
                             your name, email, gender and profile (avatar) is displayed which will be showcased
                             publicly by any user.</p>
-                            <ProfileView user={{name, email, gender, profile}} />
+                            <ProfileView user={{name, email, gender, profile}} 
+                            isLoggedUser={true} />
                             </div>
                             <div id="tree"><h1>Tree View</h1>
                             <p>The tree comprises of the collection of major id and the list which will be showcased
@@ -93,17 +93,18 @@ export default function Profile({ err, mail, data, personal, token, bookmarks })
                                 personalID === null ? <><Button className={styles.create_tree}
                                 onClick={() => {
                                     if (firstTimeLogin) {
-                                        alert('First time login')
+                                        window.location.href = "/registerTreeFT"
                                     } else {
                                         window.location.href = "/registerTreeNFT"
                                     }
                                 }}>Create Tree View</Button></>
                             : <>{
-                                personalID.youtube.id !== '' ? <Personal personal={personalID} />
+                                personalID.youtube.id !== '' ? <Personal personal={personalID} 
+                                isLoggedUser={true}/>
                                 : <Button className={styles.create_tree}
                                 onClick={() => {
                                     if (firstTimeLogin) {
-                                        alert('First time login')
+                                        window.location.href = "/registerTreeFT"
                                     } else {
                                         window.location.href = "/registerTreeNFT"
                                     }

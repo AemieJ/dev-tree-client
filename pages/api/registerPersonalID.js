@@ -28,29 +28,33 @@ export default async (req, res) => {
     const parsed = JSON.parse(req.body);
     let email = parsed.email
     let accessToken = parsed.accessToken
-    let acc = parsed.acc
+    let body = convertObjToString(parsed.body)
     try {
         const query = `
-        mutation {
-          deletePersonalID(email: "${email}", acc: "${acc}", accessToken: "${accessToken}") {
-            status
-            message
-            status
-            accessToken {
-              token
+            mutation {
+                insertPersonalID(email: "${email}", body: ${body}, accessToken: "${accessToken}") {
+                    status
+                    id {
+                        youtube {
+                            id
+                        }
+                    }
+
+                    accessToken {
+                        token
+                    }
+                }
             }
-          }
-        }
-        `
+            `
 
         const { data } = await client.mutate({
             mutation: gql`${query}`
          })
 
-        res.status(200).json({ data: JSON.stringify(data.deletePersonalID), err: null})
+        res.status(200).json({ data: JSON.stringify(data.insertPersonalID), err: null})
 
     } catch(errors) {
-        res.status(500).json({ data: null, err: 'Deletion of personal ID unsuccessful.' })
+        res.status(500).json({ data: null, err: 'Registration of personal ID unsuccessful.' })
     }
 
 }

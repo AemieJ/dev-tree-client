@@ -18,7 +18,11 @@ const Users = ({ users }) => {
                             The developer's tree view is just one click away. <b>A developer's tree view is never 100% perfect and in that way, each dev has a scope for growth.</b> 
                             Click the tree view to see the tree view of {user.name}.
                             </Card.Body>
-                            <Button variant="primary" className={styles.btn}>Tree View</Button>
+                            <Button variant="primary" className={styles.btn}
+                            onClick={(e) => {
+                                e.preventDefault()
+                                window.location.href = `/tree/${user.email}/${localStorage.getItem("email")}`
+                            }}>Tree View</Button>
                         </Card.Body>
                     </Card>
                         </Col>

@@ -36,6 +36,17 @@ export default function RegisterTreeNFT() {
         
     })
 
+    const approveID = (string) => {
+        let url;
+        try {
+          url = new URL(string);
+        } catch (_) {
+          return false;  
+        }
+      
+        return url.protocol === "http:" || url.protocol === "https:";
+      }
+
     const capitalizeFirstLetter = (string) => {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -47,63 +58,91 @@ export default function RegisterTreeNFT() {
         if (second !== '') list.push(second)
         if (third !== '') list.push(third)
 
-        let obj = {
-            id: idName, 
-            list: list,
-            account: id
+        let length = list.length
+        let finalList = []
+        let status = true
+        for (let i = 0; i < length; ++i) {
+            status = await approveID(list[i])
+            if (!status && list[i] !== "") {
+                toast.notify('URL isn\'t valid', {
+                    duration: 5,
+                    type: "error"
+                })
+                window.location.reload()
+            } else {
+                if (list[i] !== "") finalList.push(list[i])
+            }
         }
 
-        let body = {
-            email, 
-            body: obj,
-            accessToken
-        }
-
-        let res = await fetch(`${server}/api/addPersonalID`, {
-            method: "post",
-            body: JSON.stringify(body),
-        });
-
-        const { data, err } = await res.json()
-        if (err) {
-            toast.notify(err, {
+        status = await approveID(idName)
+        if (!status) {
+            toast.notify('URL isn\'t valid', {
                 duration: 5,
                 type: "error"
             })
+            window.location.reload()
         } else {
-            let parsed = JSON.parse(data)
-            if (parsed.status === 403) {
-                let token = parsed.accessToken.token
-                setAccessToken(token)
-                localStorage.setItem("accessToken", token)
-                body.accessToken = token
-
-                res = await fetch(`${server}/api/addPersonalID`, {
-                    method: "post",
-                    body: JSON.stringify(body),
-                });
-
-                let data2 = await res.json()
-                if (data2.err) {
-                    toast.notify(err, {
-                        duration: 5,
-                        type: "error"
-                    })
+            let obj = {
+                id: idName, 
+                list: finalList,
+                account: id
+            }
+    
+            let body = {
+                email, 
+                body: obj,
+                accessToken
+            }
+    
+            let res = await fetch(`${server}/api/addPersonalID`, {
+                method: "post",
+                body: JSON.stringify(body),
+            });
+    
+            const { data, err } = await res.json()
+            if (err) {
+                toast.notify(err, {
+                    duration: 5,
+                    type: "error"
+                })
+            } else {
+                let parsed = JSON.parse(data)
+                if (parsed.status === 403) {
+                    let token = parsed.accessToken.token
+                    setAccessToken(token)
+                    localStorage.setItem("accessToken", token)
+                    body.accessToken = token
+    
+                    res = await fetch(`${server}/api/addPersonalID`, {
+                        method: "post",
+                        body: JSON.stringify(body),
+                    });
+    
+                    let data2 = await res.json()
+                    if (data2.err) {
+                        toast.notify(err, {
+                            duration: 5,
+                            type: "error"
+                        })
+                    } else {
+                        toast.notify('Personal ID has been added', {
+                            duration: 5,
+                            type: "success"
+                        })
+                        setTimeout(window.location.href = `/profile/${email}/${token}`, 8000)
+                    }
                 } else {
                     toast.notify('Personal ID has been added', {
                         duration: 5,
                         type: "success"
                     })
-                    setTimeout(window.location.href = `/profile/${email}/${token}`, 8000)
+                    setTimeout(window.location.href = `/profile/${email}/${accessToken}`, 8000)
                 }
-            } else {
-                toast.notify('Personal ID has been added', {
-                    duration: 5,
-                    type: "success"
-                })
-                setTimeout(window.location.href = `/profile/${email}/${accessToken}`, 8000)
             }
         }
+
+
+        
 
     }
 

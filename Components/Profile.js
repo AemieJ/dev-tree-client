@@ -6,7 +6,7 @@ import { server } from '../config/server.js'
 import {toast, ToastContainer} from 'react-nextjs-toast'
 
 
-const Profile = ({ user }) => {
+const Profile = ({ user, isLoggedUser }) => {
     const [name, setName] = useState(user.name)
     const [gender, setGender] = useState(user.gender)
     const [profile, setProfile] = useState(user.profile)
@@ -99,6 +99,7 @@ const Profile = ({ user }) => {
                         placeholder="Enter your name"
                         className={styles.form_control_user}
                         value={name}
+                        disabled={!isLoggedUser}
                         onChange={(e) => setName(e.target.value)}
                         /></Card.Subtitle>
                         </div>
@@ -119,6 +120,7 @@ const Profile = ({ user }) => {
                 title={gender}
                 id="btn_gender"
                 align="end"
+                disabled={!isLoggedUser}
                 >
                 <Dropdown.Item href="#"
                 className={styles.drop_item}
@@ -138,8 +140,11 @@ const Profile = ({ user }) => {
                         </div> 
                     </Card.Body>
                 </Card>
-                <Button className={styles.update_btn}
-                onClick={updateData}>Update Data</Button>
+                {
+                    isLoggedUser ? <Button className={styles.update_btn}
+                    onClick={updateData}>Update Data</Button> : <></>
+                }
+                
             </Col>
         </Row>
         <ToastContainer />

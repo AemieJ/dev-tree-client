@@ -26,6 +26,10 @@
     border-radius: 0 10px 10px 0;
 }
 
+.list_input:disabled {
+    background-color: #fff !important;
+}
+
 .btn_grp {
     display: flex;
     justify-content: flex-end;
@@ -56,4 +60,17 @@
 .reset:active,
 .reset:focus {
     color: #fff !important;
+}
+
+.go_to {
+    background-color: #1d37c2 !important;
+}
+
+.go_to_img {
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    width: 1.1rem !important;
+    height: auto !important;
 }
