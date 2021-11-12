@@ -10,6 +10,15 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+button#scroll {
+  display: none;
+  display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;    
+    z-index: 1250;
+}
+
 .toast-container {
   z-index: 1020;
 }
