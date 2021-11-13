@@ -42,7 +42,7 @@ const Header = () => {
                             localStorage.removeItem("isLogged")
                             localStorage.removeItem("accessToken")
                             localStorage.removeItem("email")
-                            window.location.href = "http://localhost:3000/"
+                            window.location.href = "https://dev-tree-client.vercel.app/"
                         }}>Logout</Nav.Link>
                 </Nav>
                     }
