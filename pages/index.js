@@ -75,9 +75,8 @@ export default function Home() {
         <Col sm={12} lg={true}><Image src={aboutPic} /></Col>
         <Col>
           <div className={styles.title}>What Are We?</div>
-          <div className={styles.description}>We are 3 developers creating a product for developers to be used by the developers. This is a unique tool that will provide all the essential links for a developers.</div>
-          <div className={styles.description}>A tree view is provided after the details of a developer are registered with the tool and when a user wants to save the developer's tree, it's 
-          just one click to bookmark it.</div>
+          <div className={styles.description}>{"We are 3 developers creating a product for developers to be used by the developers. This is a unique tool that will provide all the essential links for a developers."}</div>
+          <div className={styles.description}>{"A tree view is provided after the details of a developer are registered with the tool and when a user wants to save the developer's tree, it's just one click to bookmark it."}</div>
           <div className={styles.description}><b>The higher the bookmark count, the developer is more appreciated.</b></div>
         </Col>
       </Row>

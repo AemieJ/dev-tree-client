@@ -95,7 +95,7 @@ export default function ResetPassword({ mail }) {
                 <Col className={styles.image}><Image src={login} className={styles.login_image} /></Col>
                 <Col sm={12} lg={true}>
                     <div className={styles.title}>Reset Password ⚒️</div>
-                    <div className={styles.description}>Let's reset your password so we can help you login 
+                    <div className={styles.description}>{"Let's reset"} your password so we can help you login 
                     to the platform with ease.
                 </div>
                     <Form auto="new-password" className={styles.form}>

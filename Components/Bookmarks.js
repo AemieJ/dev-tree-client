@@ -15,7 +15,7 @@ const Bookmarks = ({ users }) => {
                             <Card.Title>{user.name}</Card.Title>
                             <Card.Subtitle className={styles.card_subtitle}>{user.email}</Card.Subtitle>
                             <Card.Body className={styles.card_body}>
-                            The developer's tree view is just one click away. 
+                            {"The developer's tree"} view is just one click away. 
                             Click the tree view to see the tree view of {user.name}.
                             </Card.Body>
                             <Button variant="primary" className={styles.btn}

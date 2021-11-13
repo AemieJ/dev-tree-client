@@ -165,7 +165,7 @@ export default function Profile({ err, mail, sender, data, personal, isSenderBoo
                         }</> : <></>
                     }
                     
-                    <div id="user"><h1>User's Details</h1>
+                    <div id="user"><h1>{"User's Details"}</h1>
                         <p>This is the section that covers the detail of your profile. Within here,
                         your name, email, gender and profile (avatar) is displayed which will be showcased
                             publicly by any user.</p>

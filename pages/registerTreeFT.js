@@ -125,7 +125,7 @@ export default function RegisterTreeFT() {
                     <div>
                         <div className={styles.title}>Registration of ID 🚀</div>
                         <div className={styles.description}>As a first time login user, you can register the ID 
-                        of each channel here. You'll be then directed to the profile where you can update the list 
+                        of each channel here. {"You'll"} be then directed to the profile where you can update the list 
                         for the respective ID. </div>
                     </div>
                     <Form auto="new-password" className={styles.form}>

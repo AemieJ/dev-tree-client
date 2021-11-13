@@ -102,7 +102,7 @@ export default function Register() {
                 </div>
                 <Form autoComplete="new-password" className={styles.form}>
                     <Form.Group className="mb-3" controlId="formName">
-                        <Form.Label><b>Developer's Name</b></Form.Label>
+                        <Form.Label><b>{"Developer's Name"}</b></Form.Label>
                         <Form.Control type="text" 
                         required
                         placeholder="eg. Aemie Jariwala" 
@@ -124,7 +124,7 @@ export default function Register() {
                     </Form.Group>
 
                     <Form.Label><b>Gender</b></Form.Label>
-                    <div key={`inline-radio`} className="mb-3" className={styles.form_control}>
+                    <div key={`inline-radio`} className={`mb-3 ${styles.form_control}`}>
                     <Form.Check
                         inline
                         required

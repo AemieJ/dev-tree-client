@@ -111,12 +111,12 @@ export default function Login() {
                         !showForgot ?
                             <div>
                                 <div className={styles.title}>Welcome Back 👋🏼</div>
-                                <div className={styles.description}>If you're a member of a dev-tree, just login and be free to <b>utilize
+                                <div className={styles.description}>{"If you're a member of a dev-tree, just login and be free to "}<b>utilize
                     all the features</b> of our platform.</div>
                             </div> :
                             <div>
                                 <div className={styles.title}>Forgot Password ❓</div>
-                                <div className={styles.description}>If you've forgotten the password, just enter an email and a token will
+                                <div className={styles.description}>{"If you've forgotten the password"}, just enter an email and a token will
                 be sent to your respective mail.</div>
                             </div>
                     }

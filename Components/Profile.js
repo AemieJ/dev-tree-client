@@ -92,7 +92,7 @@ const Profile = ({ user, isLoggedUser }) => {
                 <Card className={styles.card}>
                 <Card.Img variant="top" src={user.profile} className={styles.card_img} />
                     <Card.Body>
-                        <p><b>The is a profile card. Email of user can't be edited.</b></p>
+                        <p><b>The is a profile card. Email of user {"can't be edited"}.</b></p>
                         <div className={styles.info}>
                         <Card.Title className={styles.card_title}>📌 Name: &nbsp;</Card.Title>
                         <Card.Subtitle className={styles.card_subtitle}><FormControl 

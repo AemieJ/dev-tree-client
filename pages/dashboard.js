@@ -75,7 +75,7 @@ export default function Dashboard(results) {
 
     return (
         <>
-            <p className={styles.title}>Developer's Dashboard</p>
+            <p className={styles.title}>{"Developer's Dashboard"}</p>
             <p className={styles.description}>Dev-tree is a platform just for the developers and that means you. This dashboard includes all the developers that are the members of our dev-tree platform.
             You could check out their tree view and if motivated, create your own as well. </p>
             <InputGroup className={`mb-3 ${styles.search_inp}`}>

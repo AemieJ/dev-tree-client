@@ -78,7 +78,7 @@ export default function Profile({ err, mail, data, personal, token, bookmarks })
                             }}>Bookmarks</Button>
                         </Col>
                         <Col>
-                            <div id="user"><h1>User's Details</h1>
+                            <div id="user"><h1>{"User's Details"}</h1>
                             <p>This is the section that covers the detail of your profile. Within here,
                             your name, email, gender and profile (avatar) is displayed which will be showcased
                             publicly by any user.</p>
@@ -114,7 +114,7 @@ export default function Profile({ err, mail, data, personal, token, bookmarks })
                             }    
                             </div>
                             <div id="bookmarks"><h1>Bookmarks</h1>
-                            <p>Bookmarks are the collection of developer's profile that has intrigued you. This section will be 
+                            <p>Bookmarks are the collection of {"developer's profile"} that has intrigued you. This section will be 
                                 only observable to you and will be shown to no other user that lands on your profile.</p></div>
                             <Bookmarks users={bookList} />
                         </Col>
