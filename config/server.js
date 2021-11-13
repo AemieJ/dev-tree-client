@@ -1,3 +1,3 @@
-const dev = process.env.NODE_ENV !== 'production'
+const dev = 'production'
 
-export const server = dev ? 'http://localhost:3000' : 'http://github.com'
+export const server = dev == 'develooment' ? 'http://localhost:3000' : 'https://dev-tree-client.vercel.app'
