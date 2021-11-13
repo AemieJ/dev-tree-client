@@ -185,7 +185,7 @@ export default function Dashboard(results) {
     )
 }
 
-export const getStaticProps = async () => {
+export const getServerSideProps = async () => {
     let res = await fetch(`${server}/api/totalUsers`);
     let data1 = await res.json() 
     let data = data1.data
