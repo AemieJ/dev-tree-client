@@ -2,10 +2,11 @@ import { Pagination, InputGroup, FormControl,
     Dropdown, DropdownButton, Button } from 'react-bootstrap'
 import { toast, ToastContainer } from 'react-nextjs-toast'
 import { server } from "../config/server";
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client'
 import { useState } from 'react'
 import Users from '../Components/Users.js'
 import styles from '../styles/Dashboard.module.css'
+import { useRouter } from 'next/router'
+
 
 export default function Dashboard(results) {
     const initialState = results;
@@ -17,7 +18,10 @@ export default function Dashboard(results) {
     const [filter, setFilter] = useState('name')
 
     const fetchUsers = async (number) => {
-        const res = await fetch(`${server}/api/dashboard/${number - 1}`);
+        const res = await fetch(`${server}/api/dashboard`, {
+            method: "post",
+            body: JSON.stringify({page: number - 1})
+        });
         const { list, err } = await res.json()
         if (err) {
             toast.notify(err, {
@@ -183,26 +187,27 @@ export default function Dashboard(results) {
 }
 
 export const getStaticProps = async () => {
-    const uri = "https://dev-tree-server.herokuapp.com/graphql/"
-    const client = new ApolloClient({
-        uri,
-        cache: new InMemoryCache()
-    })
+    let res = await fetch(`${server}/api/totalUsers`);
+    let { data, errT } = await res.json() 
+    if (errT) {
+        return {
+            props: {
+                err: errT,
+                pages: 0,
+                users: null
+            }
+        }
+    }
+
+    let pages = Math.ceil(JSON.parse(data) / 6);
 
 
-    const { data } = await client.query({
-        query: gql`
-            query {
-                totalUsers 
-            }    
-            `
-    })
+    res = await fetch(`${server}/api/dashboard`, {
+        method: "post",
+        body: JSON.stringify({page: 0})
+    });
 
-    let pages = Math.ceil(data.totalUsers / 6);
-
-
-    const res = await fetch(`${server}/api/dashboard/0`);
-    const { list, err } = await res.json()
+    let { list, err } = await res.json()
 
     if (err) {
         return {

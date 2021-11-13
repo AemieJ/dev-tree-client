@@ -15,7 +15,6 @@ export default function Profile({ err, mail, sender, data, personal, isSenderBoo
     const [personalID, setPersonal] = useState(null)
 
     useEffect(() => {
-        console.log(isSenderBookmarked)
         setEmail(mail)
         if (data !== undefined) {
             setName(data.name)
@@ -280,8 +279,6 @@ export const getServerSideProps = async (context) => {
         }
     
         let parsed2 = JSON.parse(data3)
-        console.log(parsed2)
-        console.log(err3)
         if (parsed2.status === 403) {
             let accessToken = parsed2.accessToken.token
             res = await fetch(`${server}/api/fetchBookmarks`, {

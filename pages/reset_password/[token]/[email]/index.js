@@ -6,7 +6,6 @@ import PassError from '../../../../Components/PassError.js'
 import ResetPassword from '../../../../Components/ResetPassword.js'
 
 export default function ResetPass({ isValid, email }) {
-    console.log(isValid)
     return (
         <>
         {

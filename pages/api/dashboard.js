@@ -6,13 +6,26 @@ const client = new ApolloClient({
     cache: new InMemoryCache()
 })
 
+const convertObjToString = (obj) => {
+    const stringify = Object
+      .entries(obj)
+      .reduce((a, e) => {
+        if (typeof e[1] !== 'function') {
+          a += `${e[0]} : "${e[1]}", `
+        }
+        return a
+      }, '`{')
+      .slice(1, -2) + '}'
+    return stringify
+}
+
 export default async (req, res) => {
-    const page = req.query.id
+    const parsed = JSON.parse(req.body);
     try {
         const { data } = await client.query({
             query: gql`
             query {
-                users(page: ${page}) {
+                users(page: ${parsed.page}) {
                     users {
                         name
                         email
@@ -26,7 +39,7 @@ export default async (req, res) => {
         res.status(200).json({ list: JSON.stringify(data.users), err: null})
 
     } catch(errors) {
-        res.status(500).json({ list: null, err: 'Server Error' })
+        res.status(500).json({ list: null, err: 'Server Error.' })
     }
 
 }
