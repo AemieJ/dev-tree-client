@@ -7,7 +7,6 @@ const client = new ApolloClient({
 })
 
 export default async (req, res) => {
-    const email = req.body
     try {
         const { data } = await client.query({
             query: gql`

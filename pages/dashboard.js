@@ -5,14 +5,13 @@ import { server } from "../config/server";
 import { useState } from 'react'
 import Users from '../Components/Users.js'
 import styles from '../styles/Dashboard.module.css'
-import { useRouter } from 'next/router'
 
 
 export default function Dashboard(results) {
     const initialState = results;
     const [totalPages, setTotalPages] = useState(initialState.pages)
     const [users, setUsers] = useState(initialState.users);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(initialState.pages === 0 ? 0: 1);
     const [search, setSearch] = useState('')
     const [clicked, setClicked] = useState(false)
     const [filter, setFilter] = useState('name')
@@ -188,7 +187,9 @@ export default function Dashboard(results) {
 
 export const getStaticProps = async () => {
     let res = await fetch(`${server}/api/totalUsers`);
-    let { data, errT } = await res.json() 
+    let data1 = await res.json() 
+    let data = data1.data
+    let errT = data1.err
     if (errT) {
         return {
             props: {
@@ -221,6 +222,7 @@ export const getStaticProps = async () => {
 
     const parsed = JSON.parse(list)
     const users = parsed.users
+
     return {
         props: {
             err: null,
