@@ -183,7 +183,7 @@ export default function Dashboard(results) {
 }
 
 export const getStaticProps = async () => {
-    const uri = "http://localhost:4000/graphql/"
+    const uri = "https://dev-tree-server.herokuapp.com/graphql/"
     const client = new ApolloClient({
         uri,
         cache: new InMemoryCache()
